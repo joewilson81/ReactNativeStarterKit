@@ -492,3 +492,10 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    ```
 
    It's not doing much since our app component is just an entry point and we don't want to test third party libraries.
+
+14. Before we can test our Test component, we need to also export the undecorated component - otherwise we're testing the `connect` higher order component.
+
+   Export the Test class in `/src/components/Test.js`:
+   ```javascript
+   export class Test extends Component ...
+   ```

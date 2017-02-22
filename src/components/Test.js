@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { buttonPush } from '../actions';
 
-class Test extends Component {
+export class Test extends Component {
   render() {
     const { containerStyle, welcomeStyle } = styles;
 
