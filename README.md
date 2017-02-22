@@ -163,3 +163,77 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
      }
    }
    ```
+
+6. We're headed down a gnarly path with App.js defining the store, middleware, and view composition. We want to add some actions and a button to test the middleware we have added, but now would be a good time to refactor. Let's break the view out into a new component called Test.
+
+   Create `/src/components/Test.js` and move the view logic from `App.js` into `Test.js`
+
+   `App.js` now looks like
+   ```javascript
+   import React, { Component } from 'react';
+   import { Provider } from 'react-redux';
+   import { createStore, applyMiddleware } from 'redux';
+   import reducers from './reducers';
+   import Test from './components/Test';
+
+   class App extends Component {
+     render() {
+       const middleware = [];
+
+       // Only apply the following middleware in development!
+       if (process.env.NODE_ENV !== 'production') {
+         middleware.push(require('redux-logger')());
+         middleware.push(require('redux-immutable-state-invariant')());
+       }
+
+       const store = createStore(reducers, {}, applyMiddleware(...middleware));
+
+
+       return (
+         <Provider store={store}>
+           <Test />
+         </Provider>
+       );
+     }
+   }
+
+   export default App;
+   ```
+
+   `Test.js` looks like
+   ```javascript
+   import React, { Component } from 'react';
+   import { View, Text, StyleSheet } from 'react-native';
+
+   class Test extends Component {
+     render() {
+       const { containerStyle, welcomeStyle } = styles;
+
+       return (
+         <View style={containerStyle}>
+           <Text style={welcomeStyle}>
+             Welcome to React Native!
+           </Text>
+         </View>
+       );
+     }
+   }
+
+   const styles = StyleSheet.create({
+     containerStyle: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+     },
+     welcomeStyle: {
+       fontSize: 20,
+       textAlign: 'center',
+       margin: 10,
+     }
+   });
+
+   export default Test;
+   ```
+
+   Now `App.js` is much cleaner!
