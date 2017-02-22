@@ -47,3 +47,31 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    `npm i redux-immutable-state-invariant --save-dev`
 
    And add the middleware to the redux store.
+
+   `App.js` should look like this
+   ```javascript
+   class App extends Component {
+     render() {
+       const middleware = [];
+
+       // Only apply the following middleware in development!
+       if (process.env.NODE_ENV !== 'production') {
+         middleware.push(require('redux-logger')());
+         middleware.push(require('redux-immutable-state-invariant')());
+       }
+
+       const store = createStore(reducers, {}, applyMiddleware(...middleware));
+       const { containerStyle, welcomeStyle } = styles;
+
+       return (
+         <Provider store={store}>
+           <View style={containerStyle}>
+             <Text style={welcomeStyle}>
+               Welcome to React Native!
+             </Text>
+           </View>
+         </Provider>
+       );
+     }
+   }
+   ```
