@@ -36,11 +36,87 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    `react-native run-ios` To check in iOS
    `react-native run-android` (while the Android emulator is running) to check in Android
 
+   `App.js` should look like this
+   ```javascript
+   import React, { Component } from 'react';
+   import { Provider } from 'react-redux';
+   import { createStore } from 'redux';
+   import { View, Text, StyleSheet } from 'react-native';
+   import reducers from './reducers';
+
+   class App extends Component {
+     render() {
+       const store = createStore(reducers);
+       const { containerStyle, welcomeStyle } = styles;
+
+       return (
+         <Provider store={store}>
+           <View style={containerStyle}>
+             <Text style={welcomeStyle}>
+               Welcome to React Native!
+             </Text>
+           </View>
+         </Provider>
+       );
+     }
+   }
+
+   const styles = StyleSheet.create({
+     containerStyle: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+     },
+     welcomeStyle: {
+       fontSize: 20,
+       textAlign: 'center',
+       margin: 10,
+     }
+   });
+
+
+   export default App;
+   ```
+
 4. It is nice to see when Redux actions are triggered and view the state before and after each action, so let's set up `redux-logger`
 
    `npm i redux-logger --save-dev`
 
    Add the logger to the middleware for development only.
+
+   `App.js` should look like this
+   ```javascript
+   import React, { Component } from 'react';
+   import { Provider } from 'react-redux';
+   import { createStore, applyMiddleware } from 'redux';
+   import { View, Text, StyleSheet } from 'react-native';
+   import reducers from './reducers';
+
+   class App extends Component {
+     render() {
+       const middleware = [];
+
+       // Only apply the following middleware in development!
+       if (process.env.NODE_ENV !== 'production') {
+         middleware.push(require('redux-logger')());
+       }
+
+       const store = createStore(reducers, {}, applyMiddleware(...middleware));
+       const { containerStyle, welcomeStyle } = styles;
+
+       return (
+         <Provider store={store}>
+           <View style={containerStyle}>
+             <Text style={welcomeStyle}>
+               Welcome to React Native!
+             </Text>
+           </View>
+         </Provider>
+       );
+     }
+   }
+   ```
 
 5. While we're at it, we don't want the store to be mutated. Install `redux-immutable-state-invariant`:
 
