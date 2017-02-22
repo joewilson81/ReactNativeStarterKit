@@ -410,3 +410,32 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    Go ahead and remove `__tests__/index.android.js` and `__tests__/index.ios.js` since those files are now just boilerplate.
 
    Run `npm test` and our action creator test should pass.
+
+11. We can't really test our reducer as it is simply an anonymous function. Let's refactor it!
+
+   Create `/src/reducers/DummyReducer.js` and move our reducer logic there:
+   ```javascript
+   import { BUTTON_PUSH } from '../actions/types';
+
+   const INITIAL_STATE = { buttonPressed: false };
+
+   export default (state = INITIAL_STATE, action) => {
+     switch (action.type) {
+       case BUTTON_PUSH:
+         return { ...state, buttonPressed: true };
+
+       default:
+         return state;
+     }
+   }
+   ```
+
+   Next, we need to update `/src/reducers/index.js` to pull in the DummyReducer:
+   ```javascript
+   import { combineReducers } from 'redux';
+   import DummyReducer from './DummyReducer';
+
+   export default combineReducers({
+     dummy: DummyReducer
+   });
+   ```
