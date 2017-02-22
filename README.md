@@ -295,11 +295,11 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 
 8. We now have a button that triggers an action defined by our action creator. Let's open the debugger to see what happens!
 
-   In the iOS simulator, press CMD + D to open the debug menu and select "Start Remote JS Debugging".
+   In the iOS simulator, press CMD + D to open the debug menu and select "Debug JS Remotely".
 
    OR
 
-   In the Android emulator, press CMD + M to open the debug menu and select "Start Remote JS Debugging".
+   In the Android emulator, press CMD + M to open the debug menu and select "Debug JS Remotely".
 
    Open the developer console in your browser (starting the remote debugger should have opened a new tab in your default browser).
 
