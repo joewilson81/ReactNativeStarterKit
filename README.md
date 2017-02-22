@@ -389,3 +389,24 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
                         dummy: Object
                             buttonPressed: true
    ```
+
+10. Let's write some tests! Starting with our action creator...
+
+   Create `/__tests__/actions/index-test.js` to test our action creator.
+
+   ```javascript
+   import * as actions from '../../src/actions';
+   import * as types from '../../src/actions/types';
+
+   describe('actions', () => {
+     it('should create an action to push a button', () => {
+       const expectedAction = { type: types.BUTTON_PUSH };
+
+       expect(actions.buttonPush()).toEqual(expectedAction);
+     });
+   });
+   ```
+
+   Go ahead and remove `__tests__/index.android.js` and `__tests__/index.ios.js` since those files are now just boilerplate.
+
+   Run `npm test` and our action creator test should pass.
