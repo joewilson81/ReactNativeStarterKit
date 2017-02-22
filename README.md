@@ -237,3 +237,58 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    ```
 
    Now `App.js` is much cleaner!
+
+7. Add a button, action creator, and update the reducer so we can check that our logger and immutable store are working.
+
+   Create `/src/actions/index.js`:
+   ```javascript
+   export const buttonPush = () => {
+     return { type: 'button_push' };
+   }
+   ```
+
+   Connect our Test component to the Redux store with `connect` and add a button to the Test component that triggers the `buttonPush` action:
+
+   `Test.js` now looks like
+   ```javascript
+   import React, { Component } from 'react';
+   import { View, Text, Button, StyleSheet } from 'react-native';
+   import { connect } from 'react-redux';
+   import { buttonPush } from '../actions';
+
+   class Test extends Component {
+     render() {
+       const { containerStyle, welcomeStyle } = styles;
+
+       return (
+         <View style={containerStyle}>
+           <Text style={welcomeStyle}>
+             Welcome to React Native!
+           </Text>
+
+           <Button
+             title="Trigger the buttonPush action!"
+             color="#841584"
+             onPress={() => this.props.buttonPush()}
+           />
+         </View>
+       );
+     }
+   }
+
+   const styles = StyleSheet.create({
+     containerStyle: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       backgroundColor: '#F5FCFF',
+     },
+     welcomeStyle: {
+       fontSize: 20,
+       textAlign: 'center',
+       margin: 10,
+     }
+   });
+
+   export default connect(null, { buttonPush })(Test);
+   ```

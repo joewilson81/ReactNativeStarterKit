@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { buttonPush } from '../actions';
 
 class Test extends Component {
   render() {
@@ -10,6 +12,12 @@ class Test extends Component {
         <Text style={welcomeStyle}>
           Welcome to React Native!
         </Text>
+
+        <Button
+          title="Trigger the buttonPush action!"
+          color="#841584"
+          onPress={() => this.props.buttonPush()}
+        />
       </View>
     );
   }
@@ -29,4 +37,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Test;
+export default connect(null, { buttonPush })(Test);
