@@ -499,3 +499,28 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    ```javascript
    export class Test extends Component ...
    ```
+
+15. Test our component!
+
+   Create `/__tests__/Test-test.js` and realize it was a bad idea to name our component `Test`.
+
+   Write a test that will throw an error if our component output changes (by saving a snapshot of the output):
+
+   ```javascript
+   import 'react-native';
+   import React from 'react';
+   import renderer from 'react-test-renderer';
+   import { Test } from '../../src/components/Test';
+
+   describe('Test Component', () => {
+     it('should render self and subcomponents', () => {
+       expect(renderer.create(
+         <Test
+           buttonPush={jest.fn}
+         />
+       )).toMatchSnapshot();
+     });
+   });
+   ```
+
+   Jest creates a snapshot file for us in `/__tests__/components/__snapshots__` that will be used to compare the output when the test is ran again. This way, we're not overly concerned with specifying everything that the component renders. If something changes, Jest will notify us and we can compare the new output with what it output previously (via the snapshot). All right there in the command line. Nifty.
