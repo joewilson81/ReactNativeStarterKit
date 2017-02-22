@@ -19,3 +19,19 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 2. I'm assuming we're going to use Redux, so let's install it: `npm i redux --save`
 
    We also need React-Redux: `npm i react-redux --save`
+
+3. Set up the folder structure. This is entirely based on personal preference and convenience.
+
+   Create `/src/App.js`
+
+   Edit `index.ios.js` and `index.android.js` to register the component with `/src/App.js`
+
+   Create a React-Redux Provider in `/src/App.js`
+
+   Create `/src/reducers/index.js` and add a dummy reducer for now so we can get the store up and running.
+
+   Create a Redux store in `/src/App.js` and assign it to the Provider via props.
+
+   Test that everything is working:
+   `react-native run-ios` To check in iOS
+   `react-native run-android` (while the Android emulator is running) to check in Android
