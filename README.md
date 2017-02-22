@@ -35,3 +35,9 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    Test that everything is working:
    `react-native run-ios` To check in iOS
    `react-native run-android` (while the Android emulator is running) to check in Android
+
+4. It is nice to see when Redux actions are triggered and view the state before and after each action, so let's set up `redux-logger`
+
+   `npm i redux-logger --save-dev`
+
+   Add the logger to the middleware for development only.
