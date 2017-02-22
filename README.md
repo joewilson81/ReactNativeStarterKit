@@ -472,3 +472,23 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
      });
    });
    ```
+
+13. We deleted the default index tests, so let's write a test for our App component.
+
+   Create `/__tests__/App-test.js` with the following code:
+   ```javascript
+   import 'react-native';
+   import React from 'react';
+   import App from '../src/App';
+
+   // Note: test renderer must be required after react-native.
+   import renderer from 'react-test-renderer';
+
+   it('renders correctly', () => {
+     const tree = renderer.create(
+       <App />
+     );
+   });
+   ```
+
+   It's not doing much since our app component is just an entry point and we don't want to test third party libraries.
