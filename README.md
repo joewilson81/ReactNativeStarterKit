@@ -24,17 +24,11 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 
    Create `/src/App.js`
 
-   Edit `index.ios.js` and `index.android.js` to register the component with `/src/App.js`
+      Edit `index.ios.js` and `index.android.js` to register the component with `/src/App.js`
 
-   Create a React-Redux Provider in `/src/App.js`
+      Create a React-Redux Provider in `/src/App.js`
 
-   Create `/src/reducers/index.js` and add a dummy reducer for now so we can get the store up and running.
-
-   Create a Redux store in `/src/App.js` and assign it to the Provider via props.
-
-   Test that everything is working:
-   `react-native run-ios` To check in iOS
-   `react-native run-android` (while the Android emulator is running) to check in Android
+      Create a Redux store in `/src/App.js` and assign it to the Provider via props.
 
    `App.js` should look like this
    ```javascript
@@ -78,6 +72,24 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 
    export default App;
    ```
+
+   Create `/src/reducers/index.js` and add a dummy reducer for now so we can get the store up and running:
+
+   ```javascript
+   import { combineReducers } from 'redux';
+
+   export default combineReducers({
+     dummy: (state = {}, action) => {
+       // Our dummy reducer doesn't do anything
+       return state;
+     }
+   });
+   ```
+
+
+   Test that everything is working:
+   `react-native run-ios` To check in iOS
+   `react-native run-android` (while the Android emulator is running) to check in Android
 
 4. It is nice to see when Redux actions are triggered and view the state before and after each action, so let's set up `redux-logger`
 
