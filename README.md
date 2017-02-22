@@ -292,3 +292,100 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 
    export default connect(null, { buttonPush })(Test);
    ```
+
+8. We now have a button that triggers an action defined by our action creator. Let's open the debugger to see what happens!
+
+   In the iOS simulator, press CMD + D to open the debug menu and select "Start Remote JS Debugging".
+
+   OR
+
+   In the Android emulator, press CMD + M to open the debug menu and select "Start Remote JS Debugging".
+
+   Open the developer console in your browser (starting the remote debugger should have opened a new tab in your default browser).
+
+   Press the button we created in the app and you should see the previous state, action, and next state. Note that the state isn't modified yet since our reducer doesn't do anything.
+
+9. Test the reducer!
+
+   We will need to tell our dummy reducer to listen for the `"button_push"` action. We don't want to type this everywhere, so let's first refactor this into a constant that lives in a separate file with the rest of our action types.
+
+   Create `/src/actions/types.js` and add a constant for our action type:
+   ```javacript
+   export const BUTTON_PUSH = 'button_push';
+   ```
+
+   Update our action creator to use this constant instead of the string.
+
+   `/src/actions/index.js` now looks like
+   ```javascript
+   import { BUTTON_PUSH } from './types';
+
+   export const buttonPush = () => {
+     return { type: BUTTON_PUSH };
+   }
+   ```
+
+   Update the store when the BUTTON_PUSH action is triggered.
+
+   `/src/reducers/index.js` now looks like
+   ```javascript
+   import { combineReducers } from 'redux';
+   import { BUTTON_PUSH } from '../actions/types';
+
+   const INITIAL_STATE = { buttonPressed: false };
+
+   export default combineReducers({
+     dummy: (state = INITIAL_STATE, action) => {
+       switch (action.type) {
+         case BUTTON_PUSH:
+           state.buttonPressed = true;
+           return state;
+
+         default:
+           return state;
+       }
+     }
+   });
+   ```
+
+   Reload the app (CMD + R on iOS or R, R on Android - or open the debug menu like we did before and click Reload).
+
+   Press the button. Woops, we get an error!
+   ```
+   A state mutation was detected inside a dispatch, in the path: `dummy.buttonPressed`. Take a look at the reducer(s) handling the action {"type":"button_push"}.`
+   ```
+
+   It looks like `redux-immutable-state-invariant` is working! We should never mutate the state in React. Let's fix our reducer:
+
+   ```javascript
+   import { combineReducers } from 'redux';
+   import { BUTTON_PUSH } from '../actions/types';
+
+   const INITIAL_STATE = { buttonPressed: false };
+
+   export default combineReducers({
+     dummy: (state = INITIAL_STATE, action) => {
+       switch (action.type) {
+         case BUTTON_PUSH:
+           return { ...state, buttonPressed: true };
+
+         default:
+           return state;
+       }
+     }
+   });
+   ```
+
+   Now when we reload the app and click the button, we should see the following in the debugger (your timestamp will be different ;)
+
+   ```
+   action @ 14:51:13.834 button_push
+     prev state     Object
+                        dummy: Object
+                            buttonPressed: false
+     action         Object
+                        type: "button_push"
+     next state     Object
+                        dummy: Object
+                            buttonPressed: true
+   ```
