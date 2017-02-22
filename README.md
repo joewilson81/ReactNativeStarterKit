@@ -41,3 +41,9 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    `npm i redux-logger --save-dev`
 
    Add the logger to the middleware for development only.
+
+5. While we're at it, we don't want the store to be mutated. Install `redux-immutable-state-invariant`:
+
+   `npm i redux-immutable-state-invariant --save-dev`
+
+   And add the middleware to the redux store.

@@ -11,6 +11,7 @@ class App extends Component {
     // Only apply the following middleware in development!
     if (process.env.NODE_ENV !== 'production') {
       middleware.push(require('redux-logger')());
+      middleware.push(require('redux-immutable-state-invariant')());
     }
 
     const store = createStore(reducers, {}, applyMiddleware(...middleware));
