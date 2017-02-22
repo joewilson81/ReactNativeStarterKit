@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions should create an action to push a button 1`] = `
+Object {
+  "type": "button_push",
+}
+`;

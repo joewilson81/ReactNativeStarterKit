@@ -557,3 +557,15 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    ```
 
    Now our tests just specify that, given a previous state and an action, we expect it to produce the value stored in the snapshot (which should be the correct/desired value).
+
+18. We can leverage the same functionality for our action creator test:
+
+   ```javascript
+   import * as actions from '../../src/actions';
+
+   describe('actions', () => {
+     it('should create an action to push a button', () => {
+       expect(actions.buttonPush()).toMatchSnapshot();
+     });
+   });
+   ```
