@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DummyReducer Should handle BUTTON_PUSH 1`] = `
+Object {
+  "buttonPressed": true,
+}
+`;
+
+exports[`DummyReducer should return the initial state 1`] = `
+Object {
+  "buttonPressed": false,
+}
+`;

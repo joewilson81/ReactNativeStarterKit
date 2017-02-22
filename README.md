@@ -526,3 +526,34 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    Jest creates a snapshot file for us in `/__tests__/components/__snapshots__` that will be used to compare the output when the test is ran again. This way, we're not overly concerned with specifying everything that the component renders. If something changes, Jest will notify us and we can compare the new output with what it output previously (via the snapshot). All right there in the command line. Nifty.
 
 16. Add `"test:watch": "npm test -- --watch"` to the `"scripts"` section of `package.json` so we can test on every file change later (if that is your cup of tea). Start the test watcher with `npm run test:watch`
+
+17. We're kind of repeating ourselves a lot in the DummyReducer test. Let's leverage the Jest snapshots to simplify our lives. Note that this relies on the developer to accept the snapshot the first time around once it is producing the correct data.
+
+   Our `DummyReducer-test` becomes:
+   ```javascript
+   import reducer from '../../src/reducers/DummyReducer';
+   import * as types from '../../src/actions/types';
+
+   describe('DummyReducer', () => {
+     const INITIAL_STATE = { buttonPressed: false };
+
+     it('should return the initial state', () => {
+       // When the app first mounts, the state is undefined
+       // Simulate this with an empty action object and we should get
+       // a response that looks exactly like our INITIAL_STATE object.
+       const previousState = undefined;
+       const action = {};
+
+       expect(reducer(previousState, action)).toMatchSnapshot();
+     });
+
+     it('Should handle BUTTON_PUSH', () => {
+       const previousState = INITIAL_STATE;
+       const action = { type: types.BUTTON_PUSH };
+
+       expect(reducer(previousState, action)).toMatchSnapshot();
+     });
+   });
+   ```
+
+   Now our tests just specify that, given a previous state and an action, we expect it to produce the value stored in the snapshot (which should be the correct/desired value).

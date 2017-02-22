@@ -10,18 +10,14 @@ describe('DummyReducer', () => {
     // a response that looks exactly like our INITIAL_STATE object.
     const previousState = undefined;
     const action = {};
-    const expectedState = INITIAL_STATE;
 
-    expect(reducer(previousState, action))
-      .toEqual(expectedState);
+    expect(reducer(previousState, action)).toMatchSnapshot();
   });
 
   it('Should handle BUTTON_PUSH', () => {
     const previousState = INITIAL_STATE;
     const action = { type: types.BUTTON_PUSH };
-    const expectedState = { buttonPressed: true };
 
-    expect(reducer(previousState, action))
-      .toEqual(expectedState);
+    expect(reducer(previousState, action)).toMatchSnapshot();
   });
 });
