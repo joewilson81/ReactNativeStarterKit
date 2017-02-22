@@ -524,3 +524,5 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
    ```
 
    Jest creates a snapshot file for us in `/__tests__/components/__snapshots__` that will be used to compare the output when the test is ran again. This way, we're not overly concerned with specifying everything that the component renders. If something changes, Jest will notify us and we can compare the new output with what it output previously (via the snapshot). All right there in the command line. Nifty.
+
+16. Add `"test:watch": "npm test -- --watch"` to the `"scripts"` section of `package.json` so we can test on every file change later (if that is your cup of tea). Start the test watcher with `npm run test:watch`
