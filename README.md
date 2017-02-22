@@ -14,4 +14,8 @@ I'm not going to recreate the steps to set up React Native, so head on over to [
 
 ## Part III: Commands to get this app up and running
 
-1. `react-native init ReactNativeStarterKit`
+1. Initialize a new React Native project: `react-native init ReactNativeStarterKit`
+
+2. I'm assuming we're going to use Redux, so let's install it: `npm i redux --save`
+
+   We also need React-Redux: `npm i react-redux --save`
